@@ -28,6 +28,25 @@ def send_message(chat_id: int, text: str):
         print(f"[telegram] mesaj gönderilemedi: {e}")
 
 
+def send_document(chat_id: int, file_path: str) -> bool:
+    """Yerel bir dosyayı Telegram'a belge olarak yükler. Başarılıysa True,
+    değilse False döner - çağıran taraf (file_sender) bunu ERROR: olarak
+    modele iletebilsin diye burada exception fırlatmıyoruz."""
+    try:
+        with open(file_path, "rb") as f:
+            resp = requests.post(
+                f"{BASE_URL}/sendDocument",
+                data={"chat_id": chat_id},
+                files={"document": f},
+                timeout=60,
+            )
+        resp.raise_for_status()
+        return True
+    except (OSError, requests.exceptions.RequestException) as e:
+        print(f"[telegram] dosya gönderilemedi: {e}")
+        return False
+
+
 def poll_updates(on_message):
     """
     Sonsuz döngüde Telegram'dan yeni mesaj bekler (30sn long-polling).

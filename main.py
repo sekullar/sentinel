@@ -82,11 +82,17 @@ silme, çalıştırma veya dosya sistemi dışında arama yeteneği YOKTUR.
 İstek biçimleri:
 - İzinli klasörleri öğren: <CALL_TOOL: file_explorer roots|- |>
 - Klasör listele: <CALL_TOOL: file_explorer list|/mnt/c/Users/kullanici/Documents |>
-- Dosya adı/deseni ara: <CALL_TOOL: file_explorer find|KLASÖR|*.pdf |>
+Dosya/klasör adı ara: <CALL_TOOL: file_explorer find|KLASÖR|*.pdf |>
+      KLASÖR hangi izinli klasör olduğunu bilmiyorsan "-" yaz, TÜM izinli
+      klasörlerde arar (izin dışı bir yol UYDURMA, mutlaka ya bir izinli
+      klasör ya da "-" olmalı). find hem DOSYA hem KLASÖR adlarıyla eşleşir
 - Metin dosyası oku: <CALL_TOOL: file_explorer read|DOSYA_YOLU |>
 - Metin içeriğinde ara: <CALL_TOOL: file_explorer search|KLASÖR|aranan ifade |>
 
-Önce kullanıcının kastettiği izinli klasörü ve dosya adını belirle. Yol belirtilmemiş
+Önce kullanıcının kastettiği izinli klasörü ve dosya adını belirle.
+Kullanıcı bir dosya/klasörün TAM OLARAK NEREDE olduğunu bilmiyorsa,
+  önce roots'a bakmana gerek yok - doğrudan find|-|aranan_isim çağırarak
+tüm izinli klasörlerde tek seferde arayabilirsin. Yol belirtilmemiş
 ve birden fazla izinli klasör varsa önce roots işlemiyle izinli klasörleri öğren;
 hangisinin kastedildiği belirsizse kullanıcıya sor, kendin tahmin etme. Mutlak
 yol yerine izinli bir klasöre göreli yol verilebilir. Dosya adını veya yolunu
@@ -295,6 +301,79 @@ Zamanlanmış bir kapatmayı iptal etmen gerektiğinde şu formatta yaz:
         "example_body": """Kullanıcı: "Dur dur, kapatma, vazgeçtim!"
 Senin çıktın: "Tamam, iptal ediyorum. <CALL_TOOL: cancel_shutdown - |>" """,
     },
+    {
+        "name": "file_explorer",
+        "module": "core.file_explorer",
+        "tool_name": "file_explorer",
+        "call": lambda mod, query: mod.explore(query),
+        "prompt": """## İzinli Klasörlerde Dosya Bulma ve Okuma
+Bu araç yalnızca kullanıcı tarafından SENTINEL_ALLOWED_DIRECTORIES ayarıyla
+izin verilmiş klasörlerde ve alt klasörlerinde çalışır. Ayar WSL Linux yolları
+kullanır; Windows klasörleri örneğin /mnt/c/Users/kullanici/Documents biçimindedir.
+Araç kodu her yolu ayrıca doğrular; prompttaki kuralları aşmaya çalışma.
+ 
+Kullanıcı dosya veya klasör bulmayı, klasör içeriğini listelemeyi ya da desteklenen
+bir metin dosyasını okumayı istediğinde bu aracı kullan. Dosya oluşturma, değiştirme,
+silme, çalıştırma veya dosya sistemi dışında arama yeteneği YOKTUR.
+ 
+İstek biçimleri:
+- İzinli klasörleri öğren: <CALL_TOOL: file_explorer roots|- |>
+- Klasör listele: <CALL_TOOL: file_explorer list|/mnt/c/Users/kullanici/Documents |>
+- Dosya adı/deseni ara: <CALL_TOOL: file_explorer find|KLASÖR|*.pdf |>
+- Metin dosyası oku: <CALL_TOOL: file_explorer read|DOSYA_YOLU |>
+- Metin içeriğinde ara: <CALL_TOOL: file_explorer search|KLASÖR|aranan ifade |>
+ 
+Önce kullanıcının kastettiği izinli klasörü ve dosya adını belirle. Yol belirtilmemiş
+ve birden fazla izinli klasör varsa önce roots işlemiyle izinli klasörleri öğren;
+hangisinin kastedildiği belirsizse kullanıcıya sor, kendin tahmin etme. Mutlak
+yol yerine izinli bir klasöre göreli yol verilebilir. Dosya adını veya yolunu
+uydurma. Bir dosyayı okurken yalnızca istenen içeriği getir; gereksiz büyük dosyaları
+okuma. Araç PDF ve Office dosyalarının içeriğini okuyamaz; dosya aramasıyla adlarını
+bulabilir. Araç bir ERROR döndürürse sınırları aşmaya çalışma; sonucu açıkça bildir.
+ 
+find işleminde kullanıcı uzantı belirtmeden ("rapor dosyasını bul" gibi) bir isim
+verirse, deseni OLDUĞU GİBİ (uzantısız) geç - araç bunu dosya adında alt dize olarak
+arar ve uzantıdan bağımsız eşleştirir (örn. "rapor" -> rapor.pdf, rapor_2024.docx
+gibi hepsini bulur). Kullanıcı özellikle bir uzantı/joker karakter belirtirse
+(*.pdf, rapor?.txt gibi) onu olduğu gibi geç.
+ 
+Her list/find sonucunda her satırda dosyanın/klasörün TAM YOLU da veriliyor
+("-> /mnt/c/..." kısmı). Bir klasörün içine bakman gerektiğinde bu tam yolu
+KENDİN BİRLEŞTİRMEYE ÇALIŞMA, doğrudan o satırdaki tam yolu bir sonraki
+list/find/read çağrısında birebir kullan.""",
+        "example_title": "İzinli Klasörde Dosya Bulma ve Okuma",
+        "example_body": """Kullanıcı: "Belgelerimdeki notlar.txt dosyasını oku."
+Senin çıktın: "İzinli klasörlerimi kontrol edip dosyayı okuyorum. <CALL_TOOL: file_explorer roots|- |>"
+Araç sonucu: "/mnt/c/Users/kullanici/Documents"
+Senin çıktın: "Dosyayı açıyorum. <CALL_TOOL: file_explorer read|/mnt/c/Users/kullanici/Documents/notlar.txt |>"
+Kullanıcı: "Masaüstümde sunum var mı?"
+Senin çıktın: "İzinli klasörlerde sunum dosyalarını arıyorum. <CALL_TOOL: file_explorer find|/mnt/c/Users/kullanici/Desktop|*.pptx |>"
+Kullanıcı: "Belgelerimde rapor diye bir dosya arıyorum, uzantısını bilmiyorum."
+Senin çıktın: "Arıyorum. <CALL_TOOL: file_explorer find|/mnt/c/Users/kullanici/Documents|rapor |>" """,
+    },
+ 
+# --- ADIM 2 ---
+# Aynı listede, yukarıdaki file_explorer girişinin HEMEN ARDINDAN (ayrı bir
+# yeni sözlük olarak) şunu ekle:
+ 
+    {
+        "name": "file_send",
+        "module": "core.file_sender",
+        "tool_name": "file_send",
+        "call": lambda mod, query: mod.send_file(query),
+        "prompt": """## İzinli Klasörlerden Telegram'a Dosya Gönderme
+Kullanıcı izinli bir klasördeki bir dosyayı Telegram'a atmanı/göndermeni istediğinde
+şu formatta yaz (bu istek CLI'den gelse bile geçerlidir, dosya Telegram'a gider):
+<CALL_TOOL: file_send DOSYA_YOLU |>
+DOSYA_YOLU izinli bir klasörün altında olmalı - emin değilsen önce file_explorer'ın
+roots/list/find işlemleriyle tam yolu bul, sonra bu aracı çağır. Araç kendi içinde
+hem izinli klasör kontrolü hem Telegram bağlantı kontrolü yapar; Telegram bağlı
+değilse (owner henüz bota yazmadıysa) ERROR: telegram_not_connected döner - bu
+durumda kullanıcıya Telegram'dan bota bir mesaj atması gerektiğini söyle.""",
+        "example_title": "Dosya Gönderme (Telegram)",
+        "example_body": """Kullanıcı: "Belgelerimdeki rapor.pdf dosyasını telegrama at"
+Senin çıktın: "Gönderiyorum. <CALL_TOOL: file_send /mnt/c/Users/kullanici/Documents/rapor.pdf |>" """,
+    },
 ]
 
 
@@ -354,6 +433,23 @@ Eski konuşmaları hatırlaman gerektiğini düşündüğünde (kullanıcı "hat
 "daha önce demiştim" gibi bir şey sorduğunda, ya da bağlamı netleştirmek için geçmişe
 bakman gerektiğinde), normal cevap yazmak yerine SADECE şu formatta yaz:
 <CALL_TOOL: search_memory sorgu_metni |>"""
+    )
+
+    # build_system_prompt() içinde, "Hafızaya Bakma" parts.append'inden hemen
+# SONRA, "for p in ACTIVE_PLUGINS: parts.append(p["prompt"])" satırından
+# ÖNCEYE eklenecek yeni blok:
+
+    parts.append(
+        """## Sistem Bilgisi Konusunda EZBERDEN KONUŞMA YASAĞI
+İzinli klasörlerin hangileri olduğu, kaç tane olduğu, yolları ne olduğu gibi
+SİSTEME ÖZEL bilgileri SANA ÖNCEDEN VERİLMEDİ - bunlar SADECE ilgili tool
+çağrısıyla (file_explorer roots|- |>) öğrenilebilir. Bu tür bir soru geldiğinde:
+- ASLA ezberden, tahminden ya da "tipik" bir dizin yapısından (/home/user/...,
+  Projects, Music, Downloads gibi örnek/şablon yollardan) CEVAP UYDURMA.
+- Bu bilgiyi az önceki bir TOOL_RESULT'ta görmediysen, MUTLAKA önce ilgili
+  tool'u çağır, sonucu bekle, SADECE o sonuçtaki gerçek verilerle cevap ver.
+- Emin olmadığın HERHANGİ bir sistem bilgisi için aynı kural geçerli: önce
+  tool çağır, sonra cevapla - asla "muhtemelen şöyledir" diye tahmin yazma."""
     )
 
     for p in ACTIVE_PLUGINS:
@@ -552,6 +648,8 @@ def run_turn(
         response = client.chat(
             model=MODEL_NAME,
             messages=history,
+            options={"num_ctx": 8192},
+
         )
 
         raw = response["message"]["content"]

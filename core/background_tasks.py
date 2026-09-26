@@ -5,6 +5,8 @@ import json
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
+from core.logs import log
+
 NOTIFIED_IDS_PATH = "notified_mail_ids.json"
 
 
@@ -23,7 +25,7 @@ def _save_notified_ids(ids: set):
         with open(NOTIFIED_IDS_PATH, "w") as f:
             json.dump(list(ids), f)
     except Exception as e:
-        print(f"[BG_SERVICE] notified_ids kaydedilemedi: {e}")
+        log(f"[BG_SERVICE] notified_ids kaydedilemedi: {e}", level="warning")
 
 
 def check_gmail_loop(ask_ai_fn):
@@ -36,12 +38,12 @@ def check_gmail_loop(ask_ai_fn):
     SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
     notified_ids = _load_notified_ids()
 
-    print(f"\n[BG_SERVICE] Arka plan mail nöbetçisi başlatıldı (60 sn döngü, {len(notified_ids)} mail zaten bildirilmiş)")
+    log(f"[BG_SERVICE] Arka plan mail nöbetçisi başlatıldı (60 sn döngü, {len(notified_ids)} mail zaten bildirilmiş)")
 
     while True:
         try:
             if not os.path.exists('gmail_tokens.json'):
-                print("[BG_SERVICE] gmail_tokens.json bulunamadı.")
+                log("[BG_SERVICE] gmail_tokens.json bulunamadı.", level="warning")
                 time.sleep(60)
                 continue
 
@@ -54,7 +56,7 @@ def check_gmail_loop(ask_ai_fn):
             new_messages = [m for m in messages if m['id'] not in notified_ids]
 
             if new_messages:
-                print(f"[BG_SERVICE] {len(new_messages)} YENİ mail bulundu, modele iletiliyor...")
+                log(f"[BG_SERVICE] {len(new_messages)} YENİ mail bulundu, modele iletiliyor...")
 
                 output = []
                 for msg in new_messages:
@@ -82,10 +84,10 @@ def check_gmail_loop(ask_ai_fn):
                 ask_ai_fn(synthetic_prompt)
                 _save_notified_ids(notified_ids)
             else:
-                print("[BG_SERVICE] Yeni (bildirilmemiş) mail yok.")
+                log("[BG_SERVICE] Yeni (bildirilmemiş) mail yok.")
 
         except Exception as e:
-            print(f"[BG_SERVICE] Hata: {e}")
+            log(f"[BG_SERVICE] Hata: {e}", level="error")
 
         time.sleep(60)
 

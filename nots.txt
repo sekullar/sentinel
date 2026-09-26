@@ -60,8 +60,15 @@ Görsel üretmek için
 https://huggingface.co/leejet/Z-Image-Turbo-GGUF/tree/main  buradan Q4_0 tercih ettik
 https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/tree/main buradan Q4 K M tercih ettik
 https://huggingface.co/black-forest-labs/FLUX.1-schnell/tree/main buradan sadece ae.safetensors dosyasını indirdik.
-https://github.com/leejet/stable-diffusion.cpp/releases buradan
 
-Windows üzerinde çalıştığımız için sd-cli.exe dosyasınıda indiriyoruz.
+https://github.com/leejet/stable-diffusion.cpp/releases buradan eğer nvidia ekran kartınız varsa win cuda yoksa win cpu indirin.
+
+ilk 3 dosyayı bir klasörün içine koyun ve klasörü ai_sources olarak adlandırın
+son dosyayı ai_sources ile aynı dizine koyun ve onuda sd_sources olarak adlandırın
+
+
+
+
+
 
 

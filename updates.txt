@@ -14,3 +14,5 @@ Burası 25 Eylülden sonraki güncellemeleri destekler.
 1)Away modu eklendi, bilgisayardan uzaklaştığınızda şarjı azaldığında parlaklık kısma güç tasarrufuna alma gibi yeteneklerini kullanacak ancak daha çok geliştirme gerekli
 2)Çoklu çalışma test edildi, şu anlık sorun yok
 3) Log sistemi eklendi ve detaylandırıldı.
+4) File explorer eklendi ancak context bağlamını aştığımız için artık halüsinasyon görmeye başlıyor
+5) Halüsinasyon sorununu context bağlamını 4096'dan 8192 civarına çıkardık ve daha net sonuçlar aldık bunun üstüne GPU CPU görev dağılımı neredeyse hiç değişmediği gibi performansı üzerinde de bir sorun olmadı.
