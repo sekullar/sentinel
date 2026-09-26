@@ -1,0 +1,67 @@
+//Her seferinde keyleri export etmemiz gerekiyor proje içinde bunları netleştirmemiz gerek.
+
+//Google Calendar API çalışması için:
+1) Google cloud'a gidip proje oluşturmamız gerek sol taraftan API seçeneğini seçip enable API seçeneğine tıklamamız gerek.
+2) Oradan Google Calendar API seçip sol taraftan oauth consent screen'i seçmemiz gerekiyor. 
+3) Rastgele bir isim verip external seçeneğini seçin, bütün mail adres istenen yerlere kullandığınız bir mail adresinizi yazın.
+4) create oauth client'e tıklayın, application type, desktop app olacak
+5) create dedikten sonra aşağıdan json dosyasını indir tuşuna basın
+6) (sonradan eklenmiş madde) Takvimi kullanmak istediğinizde hata verecektir,kendinizi test kullanıcısı olarak eklemeniz gerekmektedir
+7) Projenize tıklayın zaten tıkladıysanız sorun yok Audience seçeneğine gidin(bazı arayüzlerde "OAuth consent screen" altında "Test users" bölümü olarak da görünebilir).
+8) "Test users" bölümünü bul, "+ ADD USERS" butonuna tıkla.
+9)Takvimini bağlamak istediğin Google hesabının e-posta adresini (senin kişisel Gmail'in) ekle.
+10) Audience seçeneğini bulduğunuz yerde data access seçeneği var oraya tıklayıp add or remove scopes seçeneğine tıklayın 
+11) Ardından arama yerine calendar yazıp bütün calendar apilerini seçip kaydedin.
+
+// Python'un sorun çıkarmasından dolayı gerekli şeyleri otomatik halletmesi için önce terminale "sentinel" yazıyoruz ardından pip install -r requirements.txt yazıyoruz.
+
+// sentinel komut içindekileri: develop sonunda halledilmesi gerek
+echo '
+sentinel() {
+    cd ~/projeler/sentinel && source .venv/bin/activate
+}' >> ~/.bashrc
+source ~/.bashrc
+
+
+//Web aramasının çalışması için brave search api gerekmekte.
+
+//Şu andaki projenin doğru promptlarla 30B'lik modele göre çok geliştiğini farkettim. Üstelik bu modelin sadece 3B'si aktifken.
+Senaryo: 
+Sen: takvimimde ileri zamanda herhangi bir toplantım var mı
+Sentinel: Kontrol ediyorum.
+
+Sentinel: Maalesef takvim bilgilerine erişemiyorum. Bu, muhtemelen ilgili servisin bilgisayarda kurulu veya başlatılmamış olması nedeniyle oluyor. Şu anda bu konuda sana yardımcı olamıyorum. Yardımcı olabileceğim başka bir şey var mı?
+
+Sen: Bir tür hata mı alıyorsun?
+Sentinel: Evet, takvim bilgilerine erişirken bir hata alıyorum. Bu hata, ilgili servisin bilgisayarda kurulu olmadığını veya başlatılmamış olduğunu gösteriyor. Şu anda bu konuda sana yardımcı olamıyorum. Başka bir şey istersen memnuniyet duyarım!
+
+Sen: Hatayı çözmem için bana hatayı detaylandırır mısın?
+Sentinel: Elbette, hata detaylarını şöyle açıklayayım:
+
+Hatanın adı: **Takvim Bağlantı Hatası**
+Hata Mesajı: `[Errno 2] No such file or directory: '/home/asdkr/projeler/sentinel/core/credentials.json'`
+
+Bu hata, takvim sistemine erişmek için gereken dosyanın (credentials.json) bilgisayarda bulunamadığını gösteriyor. Bu dosya, takvim servisinin çalışması için gerekli kimlik bilgilerini içeriyor. Dosyanın eksik veya yanlış konumlandırılmış olması bu hatayı oluşturuyor.
+
+Bu tür bir hata genellikle şu durumlarda oluşur:
+1. Takvim servisi henüz kurulmamış ya da başlatılmamış.
+2. Gerekli kimlik bilgileri eksik ya da yanlış yerde.
+3. Sistemde bir yapılandırma hatası var.
+
+Bu hatayı çözmek için:
+- Takvim servisinin doğru şekilde kurulu ve çalıştığından emin olun.
+- Kimlik bilgilerinin bulunduğu dosyanın doğru konumda olduğundan emin olun.
+- Eğer dosya eksikse, gerekli ayarlamaları yaparak yeniden başlatmayı deneyin.
+
+Yardımcı olmamı istediğin başka bir konu var mı?
+
+
+Görsel üretmek için
+https://huggingface.co/leejet/Z-Image-Turbo-GGUF/tree/main  buradan Q4_0 tercih ettik
+https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/tree/main buradan Q4 K M tercih ettik
+https://huggingface.co/black-forest-labs/FLUX.1-schnell/tree/main buradan sadece ae.safetensors dosyasını indirdik.
+https://github.com/leejet/stable-diffusion.cpp/releases buradan
+
+Windows üzerinde çalıştığımız için sd-cli.exe dosyasınıda indiriyoruz.
+
+

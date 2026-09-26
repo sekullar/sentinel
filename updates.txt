@@ -1,0 +1,16 @@
+Burası 25 Eylülden sonraki güncellemeleri destekler.
+25 Eylül'den önce güncelleme verisi yoktur.
+
+25 Eylül güncel veri:
+1)Sentinel, Steam kütüphanesini inceleyip oyunları ona göre başlatır.
+2) Telegram üzerinden yanıt alıp verebilir.
+3) Güncel hafıza, context ve kalıcı hafıza sistemi
+4) Spotify üzerinden müzik çalarken müziği değiştirebilir.
+5) Web araması yapabilir.
+6) Takvime yeni bir şeyler ekleyip görüntüleyebilir.
+7)memory.py'in körü körüne ollama adresine güvenip arada bir hata vermesine sebep olan o sorun çözüldü
+
+26 Eylül güncel veri:
+1)Away modu eklendi, bilgisayardan uzaklaştığınızda şarjı azaldığında parlaklık kısma güç tasarrufuna alma gibi yeteneklerini kullanacak ancak daha çok geliştirme gerekli
+2)Çoklu çalışma test edildi, şu anlık sorun yok
+3) Log sistemi eklendi ve detaylandırıldı.

@@ -1,0 +1,29 @@
+17:09:55 [INFO] [PLUGIN] web_search aktif
+17:09:55 [WARNING] [PLUGIN] file_explorer devre dışı (ModuleNotFoundError: No module named 'core.file_explorer')
+17:09:55 [INFO] [PLUGIN] spotify aktif
+17:09:55 [INFO] [PLUGIN] steam aktif
+17:09:56 [INFO] [PLUGIN] calendar_list aktif
+17:09:56 [INFO] [PLUGIN] calendar_create aktif
+17:09:56 [INFO] [PLUGIN] calendar_delete aktif
+17:09:56 [INFO] [PLUGIN] calendar_update aktif
+17:09:56 [INFO] [PLUGIN] mail_check aktif
+17:09:56 [INFO] [PLUGIN] mail_send aktif
+17:09:56 [INFO] [PLUGIN] away_toggle aktif
+17:09:56 [INFO] [PLUGIN] system_monitor aktif
+17:09:56 [INFO] [PLUGIN] power_lock aktif
+17:09:56 [INFO] [PLUGIN] power_shutdown aktif
+17:09:56 [INFO] [PLUGIN] power_cancel_shutdown aktif
+17:09:56 [INFO] Ollama aranıyor...
+17:09:56 [INFO] Ollama bulundu: http://172.20.224.1:11434
+17:09:56 [INFO] [STARTUP] arka plan servisleri (mail nöbetçisi) başlatıldı
+17:09:56 [INFO] [STARTUP] away mode scheduler başlatıldı
+17:09:56 [INFO] [STARTUP] telegram polling başlatıldı
+17:10:44 [INFO] [MODEL_RAW] Selam! Nasıl yardımcı olabilirim?
+17:11:02 [INFO] [MODEL_RAW] Açıyorum. <CALL_TOOL: launch_game Pixel Gun 3D |>
+Açıyorum. <CALL_TOOL: spotify_play cambaz |>
+17:11:02 [INFO] [TOOL:launch_game] query='Pixel Gun 3D' -> 'pixel gun 3d: pc edition' başlatıldı (Steam appid: 2524890).
+17:11:05 [INFO] [MODEL_RAW] Pixel Gun 3D açıldı! Şimdi Spotify'dan "cambaz" müziğini çalıyorum. <CALL_TOOL: spotify_play cambaz |>
+17:11:07 [INFO] [TOOL:spotify_play] query='cambaz' -> Çalınıyor: Cambaz - mor ve ötesi
+17:11:09 [INFO] [MODEL_RAW] Cambaz - mor ve ötesi şarkısı çalınıyor. Keyifli müzikler!
+17:55:01 [INFO] [MODEL_RAW] Gmail'de yeni bir okunmamış mail geldi. Gönderen: AI For Work <aiforwork@mail.beehiiv.com>. Konu: Crusoe brings receipts to AI fine-tuning. İçerikte, Serverless Fine-Tuning ile özel yapay zeka oluşturulmasının nasıl daha kolay hale geldiğinden bahsediliyor. Mailde özellikle Crusoe adlı bir firmadan alınan bilgiler yer alıyor ve bu teknolojinin yapay zekâ eğitimi süreçlerindeki avantajları vurgulanıyor.
+17:55:01 [INFO] [AWAY] Gmail'de yeni bir okunmamış mail geldi. Gönderen: AI For Work <aiforwork@mail.beehiiv.com>. Konu: Crusoe brings receipts to AI fine-tuning. İçerikte, Serverless Fine-Tuning ile özel yapay zeka oluşturulmasının nasıl daha kolay hale geldiğinden bahsediliyor. Mailde özellikle Crusoe adlı bir firmadan alınan bilgiler yer alıyor ve bu teknolojinin yapay zekâ eğitimi süreçlerindeki avantajları vurgulanıyor.
