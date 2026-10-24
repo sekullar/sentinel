@@ -67,6 +67,9 @@ ilk 3 dosyayı bir klasörün içine koyun ve klasörü ai_sources olarak adland
 son dosyayı ai_sources ile aynı dizine koyun ve onuda sd_sources olarak adlandırın
 
 
+python -m playwright install chromium
+
+
 
 
 

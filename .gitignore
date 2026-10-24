@@ -1,3 +1,20 @@
 core/token.json
 gmail_tokens.json
 core/credentials.json
+gui/node_modules
+gui/dist
+whatsapp_bridge/node_modules
+whatsapp_bridge/wa_session
+whatsapp_status.json
+whatsapp_status.json.tmp
+# companion çalışma zamanı verisi (kişisel); karakter dosyası takipte
+companion/*
+!companion/soul.md
+
+# uzun süreli hafıza (kişisel) ve ajan onay kayıtları
+memory/
+agent_data/
+bench_results.jsonl
+
+# Chroma vektör veritabanı (kişisel hafıza)
+chroma_data/
