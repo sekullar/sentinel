@@ -18,3 +18,7 @@ bench_results.jsonl
 
 # Chroma vektör veritabanı (kişisel hafıza)
 chroma_data/
+
+.spotify_cache
+*.log
+chroma_data/
